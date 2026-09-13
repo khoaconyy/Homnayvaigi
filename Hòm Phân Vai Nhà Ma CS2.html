@@ -1,0 +1,164 @@
+<!-- ... existing code ... -->
+        @keyframes cs2-glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(222, 155, 53, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(222, 155, 53, 0.7); }
+        }
+        .cs2-box { animation: cs2-glow 2s infinite; }
+    </style>
+</head>
+<body class="min-h-screen pb-12 select-none overflow-x-hidden">
+<!-- ... existing code ... -->
+            <div class="flex items-center space-x-2">
+                <span class="text-2xl">👻</span>
+                <div>
+                    <h1 class="text-[10px] font-bold text-slate-400 tracking-wider">HÒM PHÂN VAI CS2</h1>
+                    <p class="text-sm font-extrabold text-[#de9b35] tracking-wide">NHÀ MA 2026</p>
+                </div>
+            </div>
+            <div class="bg-slate-900 border border-[#de9b35]/40 rounded px-3 py-1 flex items-center space-x-2 shadow-inner">
+                <span class="text-[10px] font-mono tracking-widest text-[#de9b35] font-bold">Dev by Kay</span>
+                <span id="counter" class="text-xs font-mono font-bold text-white">210506</span>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-xl mx-auto px-4 mt-5">
+<!-- ... existing code ... -->
+            <div class="text-center mb-3">
+                <div class="inline-block bg-[#de9b35]/20 text-[#de9b35] text-[10px] font-extrabold uppercase px-3 py-1 rounded-full mb-1.5 border border-[#de9b35]/40 tracking-wider" id="modal-rarity">
+                    ★ ĐẶC BIỆT
+                </div>
+                <h3 class="text-xs uppercase font-mono text-slate-400 tracking-wider">Đã trúng vai trò</h3>
+            </div>
+
+            <div class="w-40 h-44 mx-auto rounded-2xl overflow-hidden border-2 border-[#de9b35]/60 mb-4 shadow-xl relative bg-black">
+                <img id="modal-img" src="" alt="Role image" class="w-full h-full object-cover relative z-10">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent z-20"></div>
+            </div>
+
+            <h2 id="modal-title" class="text-2xl font-black text-center text-white mb-1">Vai Trò</h2>
+<!-- ... existing code ... -->
+            <div class="flex space-x-2">
+                <button onclick="closeAddStaffModal()" class="flex-1 py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-xl font-bold text-xs">Hủy</button>
+                <button onclick="addStaffMember()" class="flex-1 py-3 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl font-bold text-xs">Thêm</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tạo ảnh SVG nền đen chữ trắng
+        const createTextImg = (text) => {
+            const encodedText = encodeURIComponent(text);
+            return `data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22400%22%20height%3D%22500%22%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22%23000000%22%2F%3E%3Ctext%20x%3D%2250%25%22%20y%3D%2250%25%22%20dominant-baseline%3D%22middle%22%20text-anchor%3D%22middle%22%20fill%3D%22%23ffffff%22%20font-size%3D%2256%22%20font-family%3D%22sans-serif%22%20font-weight%3D%22bold%22%3E${encodedText}%3C%2Ftext%3E%3C%2Fsvg%3E`;
+        };
+
+        // Cập nhật link ảnh tĩnh siêu an toàn bằng ảnh nền đen chữ đại diện
+        const allRoles = [
+            { 
+                id: 1, name: "Bếp", desc: "Người làm bếp, chuẩn bị hậu cần.", 
+                rarity: "★ CỰC KỲ HIẾM", tag: "Khổ", tagClass: "bg-red-500/20 text-red-400 border-red-500/30", 
+                color: "from-red-950 to-slate-950", border: "border-red-600", 
+                img: createTextImg("BẾP")
+            },
+            { 
+                id: 2, name: "Rể", desc: "Đàn ông mặc trang phục truyền thống.", 
+                rarity: "★ TỐI MẬT", tag: "Sướng", tagClass: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30", 
+                color: "from-purple-900 to-slate-950", border: "border-purple-500", 
+                img: createTextImg("RỂ")
+            },
+            { 
+                id: 3, name: "Dâu 1", desc: "Phụ nữ mặc áo cưới đỏ truyền thống.", 
+                rarity: "★ ĐẶC BIỆT", tag: "Bình thường", tagClass: "bg-blue-500/20 text-blue-400 border-blue-500/30", 
+                color: "from-rose-950 to-slate-950", border: "border-rose-600", 
+                img: createTextImg("DÂU 1")
+            },
+            { 
+                id: 4, name: "Dâu 2", desc: "Phụ nữ mặc váy trắng đứng tĩnh lặng.", 
+                rarity: "★ TỐI MẬT", tag: "Sướng", tagClass: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30", 
+                color: "from-amber-950 to-slate-950", border: "border-amber-600", 
+                img: createTextImg("DÂU 2")
+            },
+            { 
+                id: 5, name: "Điều phối trong", desc: "Người điều phối bên trong khu vực.", 
+                rarity: "★ ĐẶC BIỆT", tag: "Sướng", tagClass: "bg-emerald-500/20 text-emerald-400 border-emerald-500/30", 
+                color: "from-emerald-950 to-slate-950", border: "border-emerald-500", 
+                img: createTextImg("ĐP TRONG")
+            },
+            { 
+                id: 6, name: "Điều phối ngoài", desc: "Người đón khách và kiểm soát bên ngoài.", 
+                rarity: "★ HIẾM", tag: "Bình thường", tagClass: "bg-blue-500/20 text-blue-400 border-blue-500/30", 
+                color: "from-cyan-950 to-slate-950", border: "border-cyan-500", 
+                img: createTextImg("ĐP NGOÀI")
+            },
+            { 
+                id: 7, name: "Thu ngân", desc: "Người mặc đồ bình thường, thu tiền vé.", 
+                rarity: "★ HIẾM", tag: "Bình thường", tagClass: "bg-blue-500/20 text-blue-400 border-blue-500/30", 
+                color: "from-orange-950 to-slate-950", border: "border-orange-500", 
+                img: createTextImg("THU NGÂN")
+            },
+            { 
+                id: 8, name: "Quản gia", desc: "Người mặc áo kiểu truyền thống trang trọng.", 
+                rarity: "★ HUYỀN THOẠI", tag: "Bình thường", tagClass: "bg-blue-500/20 text-blue-400 border-blue-500/30", 
+                color: "from-yellow-900 to-slate-950", border: "border-yellow-500", 
+                img: createTextImg("QUẢN GIA")
+            }
+        ];
+
+        let availableRoles = [...allRoles];
+        // Danh sách mẫu có sẵn giới tính
+        let staffList = [
+            { id: 1, name: "Vân Anh", gender: "Nữ", role: null },
+            { id: 2, name: "Hồng Nhung", gender: "Nữ", role: null },
+            { id: 3, name: "Minh Tuấn", gender: "Nam", role: null },
+            { id: 4, name: "Đức Huy", gender: "Nam", role: null }
+        ];
+        let history = [];
+        let isRolling = false;
+        let statTrakCount = 210506;
+
+        let audioCtx = null;
+<!-- ... existing code ... -->
+        function buildRollerInitial() {
+            const track = document.getElementById('roller-track');
+            let html = '';
+            
+            const nextStaff = getNextStaff();
+            let pool = [...availableRoles];
+            
+            // Logic Nữ không vào Bếp và Rể khi vẽ UI khởi tạo
+            if (nextStaff && nextStaff.gender === 'Nữ') {
+                pool = pool.filter(r => r.name !== 'Bếp' && r.name !== 'Rể');
+            }
+            if(pool.length === 0) pool = availableRoles;
+
+            for (let i = 0; i < 30; i++) {
+                const r = pool[Math.floor(Math.random() * pool.length)];
+                html += createCardHtml(r);
+            }
+            track.innerHTML = html;
+            track.style.transform = 'translateX(0px)';
+        }
+
+        function createCardHtml(role) {
+            return `
+                <div class="flex-shrink-0 w-36 h-44 bg-gradient-to-b ${role.color} border-2 ${role.border} rounded-xl p-2 flex flex-col justify-between shadow-lg relative overflow-hidden">
+                    <div class="absolute top-1.5 left-1.5 z-10 bg-black/75 backdrop-blur text-[8px] font-mono font-bold text-[#de9b35] px-1.5 py-0.5 rounded border border-[#de9b35]/30">
+                        ${role.rarity}
+                    </div>
+                    <div class="w-full h-28 rounded-lg overflow-hidden mt-5 bg-slate-900 border border-white/10 shadow-inner relative">
+                        <img src="${role.img}" class="w-full h-full object-cover relative z-10" alt="${role.name}">
+                        
+                        <div class="absolute bottom-1 right-1 px-1.5 py-0.5 rounded text-[8px] font-extrabold uppercase ${role.tagClass} z-20">
+                            ${role.tag}
+                        </div>
+                    </div>
+                    <div class="text-center truncate mt-1">
+                        <span class="text-xs font-extrabold text-white tracking-wide">${role.name}</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function startRolling() {
+            if (isRolling) return;
+<!-- ... existing code ... -->
